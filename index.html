@@ -1,0 +1,651 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NebtuneOS - Be a PC Teacher!</title>
+    <style>
+        :root {
+            --purple-dark: #1a0a2e;
+            --purple-medium: #2d1b69;
+            --purple-light: #6a4c93;
+            --purple-accent: #8a63d2;
+            --black: #000000;
+            --white: #ffffff;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, var(--purple-dark) 0%, var(--black) 100%);
+            color: var(--white);
+            line-height: 1.6;
+            scroll-behavior: smooth;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        /* Header Styles */
+        header {
+            background: rgba(0, 0, 0, 0.8);
+            padding: 1rem 0;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            backdrop-filter: blur(10px);
+        }
+        
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-size: 2rem;
+            font-weight: bold;
+            color: var(--purple-accent);
+        }
+        
+        .logo-subtitle {
+            font-size: 0.8rem;
+            color: var(--white);
+            font-style: italic;
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+        }
+        
+        .nav-links a {
+            color: var(--white);
+            text-decoration: none;
+            transition: color 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .nav-links a:hover {
+            color: var(--purple-accent);
+        }
+        
+        .nav-icon {
+            font-size: 1.2rem;
+        }
+        
+        .language-switcher {
+            display: flex;
+            gap: 0.5rem;
+        }
+        
+        .lang-btn {
+            background: var(--purple-medium);
+            color: var(--white);
+            border: none;
+            padding: 0.3rem 0.8rem;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        
+        .lang-btn:hover {
+            background: var(--purple-accent);
+        }
+        
+        .lang-btn.active {
+            background: var(--purple-accent);
+        }
+        
+        /* Hero Section */
+        .hero {
+            padding: 150px 0 100px;
+            text-align: center;
+            background: radial-gradient(circle at center, var(--purple-medium) 0%, transparent 70%);
+        }
+        
+        .hero h1 {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(45deg, var(--purple-accent), var(--white));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .tagline {
+            font-size: 1.5rem;
+            margin-bottom: 2rem;
+            color: var(--purple-light);
+        }
+        
+        .subtagline {
+            font-size: 1.2rem;
+            font-style: italic;
+            margin-bottom: 3rem;
+        }
+        
+        /* Download Section */
+        .download-section {
+            padding: 80px 0;
+            text-align: center;
+        }
+        
+        .version-cards {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            flex-wrap: wrap;
+            margin-top: 3rem;
+        }
+        
+        .version-card {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 2rem;
+            border-radius: 15px;
+            width: 300px;
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--purple-light);
+            transition: transform 0.3s;
+        }
+        
+        .version-card:hover {
+            transform: translateY(-10px);
+        }
+        
+        .version-card h3 {
+            color: var(--purple-accent);
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
+        }
+        
+        .coming-soon {
+            background: var(--purple-medium);
+            color: var(--white);
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            display: inline-block;
+            margin: 1rem 0;
+        }
+        
+        .download-btn {
+            background: linear-gradient(45deg, var(--purple-accent), var(--purple-light));
+            color: var(--white);
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 25px;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: transform 0.3s;
+            margin-top: 1rem;
+        }
+        
+        .download-btn:hover {
+            transform: scale(1.05);
+        }
+        
+        .download-btn:disabled {
+            background: var(--purple-medium);
+            cursor: not-allowed;
+        }
+        
+        /* Features Section */
+        .features {
+            padding: 80px 0;
+            background: rgba(0, 0, 0, 0.3);
+        }
+        
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+        
+        .feature-card {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 2rem;
+            border-radius: 10px;
+            text-align: center;
+        }
+        
+        .feature-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            color: var(--purple-accent);
+        }
+        
+        /* About Section */
+        .about-section {
+            padding: 80px 0;
+            text-align: center;
+        }
+        
+        .about-content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+        
+        .social-card {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 2rem;
+            border-radius: 15px;
+            border: 1px solid var(--purple-light);
+            transition: transform 0.3s;
+            text-decoration: none;
+            color: var(--white);
+        }
+        
+        .social-card:hover {
+            transform: translateY(-5px);
+            color: var(--purple-accent);
+        }
+        
+        .social-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+        
+        .morocco-flag {
+            font-size: 2rem;
+            margin: 1rem 0;
+        }
+        
+        /* Footer */
+        footer {
+            background: var(--black);
+            padding: 3rem 0;
+            text-align: center;
+            margin-top: 4rem;
+        }
+        
+        .footer-social {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin: 1rem 0;
+        }
+        
+        .footer-social a {
+            color: var(--white);
+            font-size: 1.5rem;
+            transition: color 0.3s;
+        }
+        
+        .footer-social a:hover {
+            color: var(--purple-accent);
+        }
+        
+        /* Translation Styles */
+        .language-content {
+            display: none;
+        }
+        
+        .language-content.active {
+            display: block;
+        }
+        
+        /* Section IDs for navigation */
+        #home, #download, #features, #about {
+            scroll-margin-top: 100px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <nav class="container">
+            <div class="logo">
+                NebtuneOS<br>
+                <span class="logo-subtitle">Be a PC Teacher!</span>
+            </div>
+            <div class="nav-links">
+                <a href="#home" class="nav-link">
+                    <span class="nav-icon">🏠</span>
+                    <span class="nav-text">Home</span>
+                </a>
+                <a href="#download" class="nav-link">
+                    <span class="nav-icon">📥</span>
+                    <span class="nav-text">Download</span>
+                </a>
+                <a href="#features" class="nav-link">
+                    <span class="nav-icon">⭐</span>
+                    <span class="nav-text">Features</span>
+                </a>
+                <a href="#about" class="nav-link">
+                    <span class="nav-icon">ℹ️</span>
+                    <span class="nav-text">About</span>
+                </a>
+            </div>
+            <div class="language-switcher">
+                <button class="lang-btn active" data-lang="en">EN</button>
+                <button class="lang-btn" data-lang="ar">AR</button>
+                <button class="lang-btn" data-lang="fr">FR</button>
+                <button class="lang-btn" data-lang="zh">中文</button>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="container">
+            <div class="language-content active" data-lang="en">
+                <h1>NebtuneOS</h1>
+                <div class="tagline">The Future of Educational Computing</div>
+                <div class="subtagline">Be a PC Teacher!</div>
+            </div>
+            <div class="language-content" data-lang="ar">
+                <h1>نبتون أو إس</h1>
+                <div class="tagline">مستقبل الحوسبة التعليمية</div>
+                <div class="subtagline">كن معلم حاسوب!</div>
+            </div>
+            <div class="language-content" data-lang="fr">
+                <h1>NebtuneOS</h1>
+                <div class="tagline">Le Futur de l'Informatique Éducative</div>
+                <div class="subtagline">Soyez un Professeur d'Informatique!</div>
+            </div>
+            <div class="language-content" data-lang="zh">
+                <h1>海王星操作系统</h1>
+                <div class="tagline">教育计算的未来</div>
+                <div class="subtagline">成为电脑教师！</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Download Section -->
+    <section class="download-section" id="download">
+        <div class="container">
+            <div class="language-content active" data-lang="en">
+                <h2>Download NebtuneOS</h2>
+                <p>Choose your version below</p>
+            </div>
+            <div class="language-content" data-lang="ar">
+                <h2>تحميل نبتون أو إس</h2>
+                <p>اختر النسخة المناسبة لك</p>
+            </div>
+            <div class="language-content" data-lang="fr">
+                <h2>Télécharger NebtuneOS</h2>
+                <p>Choisissez votre version ci-dessous</p>
+            </div>
+            <div class="language-content" data-lang="zh">
+                <h2>下载海王星操作系统</h2>
+                <p>选择您的版本</p>
+            </div>
+
+            <div class="version-cards">
+                <!-- School Version -->
+                <div class="version-card">
+                    <h3>School Version</h3>
+                    <div class="language-content active" data-lang="en">
+                        <p>Optimized for educational environments with pre-installed learning tools and classroom management features.</p>
+                    </div>
+                    <div class="language-content" data-lang="ar">
+                        <p>مُحسَّن للبيئات التعليمية مع أدوات التعلم المثبتة مسبقًا وميزات إدارة الفصول الدراسية.</p>
+                    </div>
+                    <div class="language-content" data-lang="fr">
+                        <p>Optimisé pour les environnements éducatifs avec des outils d'apprentissage préinstallés et des fonctionnalités de gestion de classe.</p>
+                    </div>
+                    <div class="language-content" data-lang="zh">
+                        <p>为教育环境优化，预装学习工具和课堂管理功能。</p>
+                    </div>
+                    <div class="coming-soon">Coming Soon</div>
+                    <button class="download-btn" disabled>
+                        <span class="language-content active" data-lang="en">Download</span>
+                        <span class="language-content" data-lang="ar">تحميل</span>
+                        <span class="language-content" data-lang="fr">Télécharger</span>
+                        <span class="language-content" data-lang="zh">下载</span>
+                    </button>
+                </div>
+
+                <!-- Standard Version -->
+                <div class="version-card">
+                    <h3>Standard Version</h3>
+                    <div class="language-content active" data-lang="en">
+                        <p>Perfect for everyday use with all essential applications and optimized performance.</p>
+                    </div>
+                    <div class="language-content" data-lang="ar">
+                        <p>مثالي للاستخدام اليومي مع جميع التطبيقات الأساسية والأداء المُحسَّن.</p>
+                    </div>
+                    <div class="language-content" data-lang="fr">
+                        <p>Parfait pour un usage quotidien avec toutes les applications essentielles et des performances optimisées.</p>
+                    </div>
+                    <div class="language-content" data-lang="zh">
+                        <p>适合日常使用，包含所有基本应用程序和优化性能。</p>
+                    </div>
+                    <div class="coming-soon">Coming Soon</div>
+                    <button class="download-btn" disabled>
+                        <span class="language-content active" data-lang="en">Download</span>
+                        <span class="language-content" data-lang="ar">تحميل</span>
+                        <span class="language-content" data-lang="fr">Télécharger</span>
+                        <span class="language-content" data-lang="zh">下载</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features" id="features">
+        <div class="container">
+            <div class="language-content active" data-lang="en">
+                <h2>Why Choose NebtuneOS?</h2>
+            </div>
+            <div class="language-content" data-lang="ar">
+                <h2>لماذا تختار نبتون أو إس؟</h2>
+            </div>
+            <div class="language-content" data-lang="fr">
+                <h2>Pourquoi Choisir NebtuneOS?</h2>
+            </div>
+            <div class="language-content" data-lang="zh">
+                <h2>为什么选择海王星操作系统？</h2>
+            </div>
+
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">🚀</div>
+                    <h3>Fast & Lightweight</h3>
+                    <div class="language-content active" data-lang="en">
+                        <p>Optimized for speed and performance on any hardware</p>
+                    </div>
+                    <div class="language-content" data-lang="ar">
+                        <p>مُحسَّن للسرعة والأداء على أي جهاز</p>
+                    </div>
+                    <div class="language-content" data-lang="fr">
+                        <p>Optimisé pour la vitesse et les performances sur n'importe quel matériel</p>
+                    </div>
+                    <div class="language-content" data-lang="zh">
+                        <p>在任何硬件上优化速度和性能</p>
+                    </div>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">🎓</div>
+                    <h3>Education Focused</h3>
+                    <div class="language-content active" data-lang="en">
+                        <p>Built with learning and teaching in mind</p>
+                    </div>
+                    <div class="language-content" data-lang="ar">
+                        <p>مبني مع التركيز على التعلم والتدريس</p>
+                    </div>
+                    <div class="language-content" data-lang="fr">
+                        <p>Conçu en pensant à l'apprentissage et à l'enseignement</p>
+                    </div>
+                    <div class="language-content" data-lang="zh">
+                        <p>专为学习和教学而设计</p>
+                    </div>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">🔒</div>
+                    <h3>Privacy First</h3>
+                    <div class="language-content active" data-lang="en">
+                        <p>LibreWolf browser and privacy-respecting applications</p>
+                    </div>
+                    <div class="language-content" data-lang="ar">
+                        <p>متصفح LibreWolf وتطبيقات تحترم الخصوصية</p>
+                    </div>
+                    <div class="language-content" data-lang="fr">
+                        <p>Navigateur LibreWolf et applications respectueuses de la vie privée</p>
+                    </div>
+                    <div class="language-content" data-lang="zh">
+                        <p>LibreWolf浏览器和尊重隐私的应用程序</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section class="about-section" id="about">
+        <div class="container">
+            <div class="about-content">
+                <div class="language-content active" data-lang="en">
+                    <h2>About NebtuneOS</h2>
+                    <p>NebtuneOS is an educational operating system designed to make computing accessible and effective for learning environments.</p>
+                </div>
+                <div class="language-content" data-lang="ar">
+                    <h2>حول نبتون أو إس</h2>
+                    <p>نبتون أو إس هو نظام تشغيل تعليمي مصمم لجعل الحوسبة في متناول وفعالة في البيئات التعليمية.</p>
+                </div>
+                <div class="language-content" data-lang="fr">
+                    <h2>À propos de NebtuneOS</h2>
+                    <p>NebtuneOS est un système d'exploitation éducatif conçu pour rendre l'informatique accessible et efficace pour les environnements d'apprentissage.</p>
+                </div>
+                <div class="language-content" data-lang="zh">
+                    <h2>关于海王星操作系统</h2>
+                    <p>海王星操作系统是一款教育操作系统，旨在使计算在学习环境中易于访问和有效。</p>
+                </div>
+
+                <!-- Social Links -->
+                <div class="social-links">
+                    <a href="https://x.com/IuseOwls" target="_blank" class="social-card">
+                        <div class="social-icon">🐦</div>
+                        <h3>X (Twitter)</h3>
+                        <p>@IuseOwls</p>
+                    </a>
+                    <a href="https://github.com/iuseowls-web" target="_blank" class="social-card">
+                        <div class="social-icon">💻</div>
+                        <h3>GitHub</h3>
+                        <p>iuseowls-web</p>
+                    </a>
+                </div>
+
+                <div class="morocco-flag">🇲🇦</div>
+                <div class="language-content active" data-lang="en">
+                    <p><strong>Made with ❤️ in Morocco</strong></p>
+                    <p>Proudly developed in the heart of North Africa</p>
+                </div>
+                <div class="language-content" data-lang="ar">
+                    <p><strong>مصنوع بـ ❤️ في المغرب</strong></p>
+                    <p>مطور بفخر في قلب شمال أفريقيا</p>
+                </div>
+                <div class="language-content" data-lang="fr">
+                    <p><strong>Fait avec ❤️ au Maroc</strong></p>
+                    <p>Fierté développée au cœur de l'Afrique du Nord</p>
+                </div>
+                <div class="language-content" data-lang="zh">
+                    <p><strong>在摩洛哥用心制作 ❤️</strong></p>
+                    <p>自豪地在北非中心开发</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="logo">NebtuneOS</div>
+            <div class="logo-subtitle">Be a PC Teacher!</div>
+            
+            <div class="footer-social">
+                <a href="https://x.com/IuseOwls" target="_blank" title="X (Twitter)">🐦</a>
+                <a href="https://github.com/iuseowls-web" target="_blank" title="GitHub">💻</a>
+            </div>
+            
+            <p>&copy; 2024 NebtuneOS. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Language switching functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const langButtons = document.querySelectorAll('.lang-btn');
+            const allContent = document.querySelectorAll('.language-content');
+            
+            // Set initial language
+            setLanguage('en');
+            
+            langButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const lang = this.getAttribute('data-lang');
+                    setLanguage(lang);
+                });
+            });
+            
+            function setLanguage(lang) {
+                // Update active button
+                langButtons.forEach(btn => {
+                    btn.classList.remove('active');
+                    if (btn.getAttribute('data-lang') === lang) {
+                        btn.classList.add('active');
+                    }
+                });
+                
+                // Show/hide content
+                allContent.forEach(content => {
+                    content.classList.remove('active');
+                    if (content.getAttribute('data-lang') === lang) {
+                        content.classList.add('active');
+                    }
+                });
+                
+                // Update HTML lang attribute
+                document.documentElement.setAttribute('lang', lang);
+                
+                // Update text direction for Arabic
+                if (lang === 'ar') {
+                    document.body.style.direction = 'rtl';
+                    document.body.style.textAlign = 'right';
+                } else {
+                    document.body.style.direction = 'ltr';
+                    document.body.style.textAlign = 'left';
+                }
+            }
+            
+            // Smooth scrolling for navigation links
+            document.querySelectorAll('.nav-link').forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const targetId = this.getAttribute('href');
+                    const targetSection = document.querySelector(targetId);
+                    
+                    if (targetSection) {
+                        const offsetTop = targetSection.offsetTop - 80; // Adjust for header height
+                        window.scrollTo({
+                            top: offsetTop,
+                            behavior: 'smooth'
+                        });
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>
